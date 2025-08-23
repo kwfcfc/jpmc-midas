@@ -1,5 +1,6 @@
 general:
   kafka-topic: midas-test
+  kafka-group-id: transactions
 spring:
    kafka:
      producer:
