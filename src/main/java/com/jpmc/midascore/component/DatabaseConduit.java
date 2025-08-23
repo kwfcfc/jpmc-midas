@@ -21,19 +21,28 @@ public class DatabaseConduit {
         userRepository.save(userRecord);
     }
 
-    public void record(Transaction transaction) {
-        UserRecord sender = userRepository.findById(transaction.getSenderId());
-        UserRecord recipient = userRepository.findById(transaction.getRecipientId());
-        float amount = transaction.getAmount();
+    /*
+     * Record transaction and adjust balance for sender and recipient,
+     * Adjust the incentive
+     */
+    public void recordTransaction(TransactionRecord transactionRecord) {
+        float amount = transactionRecord.getAmount();
+        float incentive = transactionRecord.getIncentive();
+        UserRecord sender = userRepository.findById(transactionRecord.getSenderId());
+        UserRecord recipient = userRepository.findById(transactionRecord.getRecipientId());
+
         float senderBalance = sender.getBalance();
         float recipientBalance = recipient.getBalance();
+        sender.setBalance(senderBalance - amount);
+        recipient.setBalance(recipientBalance + amount + incentive);
 
-        if (amount <= senderBalance) {
-            sender.setBalance(senderBalance - amount);
-            recipient.setBalance(recipientBalance + amount);
-            userRepository.save(sender);
-            userRepository.save(recipient);
-            transactionRepository.save(new TransactionRecord(transaction));
-        }
+        userRepository.save(sender);
+        userRepository.save(recipient);
+        transactionRepository.save(transactionRecord);
+    }
+
+    public boolean validateTransaction(Transaction transaction) {
+        UserRecord sender = userRepository.findById(transaction.getSenderId());
+        return sender.getBalance() >= transaction.getAmount();
     }
 }
