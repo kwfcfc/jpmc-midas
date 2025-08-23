@@ -1,2 +1,6 @@
 general:
   kafka-topic: midas-test
+spring:
+   kafka:
+     producer:
+        value-serializer: org.springframework.kafka.support.serializer.JsonSerializer 
