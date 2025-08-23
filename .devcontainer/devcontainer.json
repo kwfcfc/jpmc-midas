@@ -1,0 +1,55 @@
+{
+  "name": "JPMorgan Chase Software Engineering Project",
+  "image": "mcr.microsoft.com/vscode/devcontainers/base:debian-12",
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "jdkDistro": "graalce",
+      "version": 17,
+      "installMaven": true
+    },
+    "ghcr.io/meaningful-ooo/devcontainer-features/fish:2": {
+      "fisher": false
+    }
+  },
+  "customizations": {
+    "jetbrains": {
+      "settings": {
+        "Git4Idea:app:Git-Application-Settings.use_credential_helper": true
+      }
+    },
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "fish",
+        "terminal.integrated.profiles.linux": {
+          "fish": {
+            "path": "/usr/bin/fish"
+          }
+        }
+      },
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "vmware.vscode-boot-dev-pack"
+      ]
+    },
+    "vscodium": {
+      "registries": {
+        "openvsx": {
+          "url": "https://open-vsx.org/vscode/gallery",
+          "headers": {
+            "Accept": "application/json"
+          }
+        }
+      },
+      "extensions": {
+        "vscjava.vscode-java-pack": {
+          "registry": "openvsx"
+        },
+        "vmware.vscode-boot-dev-pack": {
+          "registry": "openvsx"
+        }
+      }
+    }
+  },
+  "postCreateCommand": "cd ${containerWorkspaceFolder} && cd .. && git clone https://github.com/cs61bl/library-su25",
+  "remoteUser": "vscode"
+}
