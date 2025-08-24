@@ -2,14 +2,16 @@ package com.jpmc.midascore.component;
 
 import com.jpmc.midascore.entity.TransactionRecord;
 import com.jpmc.midascore.entity.UserRecord;
+import com.jpmc.midascore.foundation.Balance;
 import com.jpmc.midascore.foundation.Transaction;
 import com.jpmc.midascore.repository.UserRepository;
 import com.jpmc.midascore.repository.TransactionRepository;
+
 import org.springframework.stereotype.Component;
 
 @Component
 public class DatabaseConduit {
-    private final UserRepository userRepository;
+    final UserRepository userRepository;
     private final TransactionRepository transactionRepository;
 
     public DatabaseConduit(UserRepository userRepository, TransactionRepository transactionRepository) {
@@ -19,6 +21,11 @@ public class DatabaseConduit {
 
     public void save(UserRecord userRecord) {
         userRepository.save(userRecord);
+    }
+
+    public Balance queryBalance(Long id) {
+        Float balance = userRepository.findById(id).map(user -> user.getBalance()).orElse((float) 0);
+        return new Balance(balance);
     }
 
     /*

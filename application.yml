@@ -2,6 +2,8 @@ general:
   kafka-topic: midas-test
   kafka-group-id: transactions
   incentive-url: "http://localhost:8080/incentive"
+server:
+  port: 33400
 spring:
    kafka:
      producer:

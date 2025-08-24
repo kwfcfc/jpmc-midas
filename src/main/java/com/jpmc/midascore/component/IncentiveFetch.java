@@ -2,8 +2,6 @@ package com.jpmc.midascore.component;
 
 import static org.junit.Assert.assertNotNull;
 
-import java.net.URI;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Component;
